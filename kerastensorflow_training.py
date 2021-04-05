@@ -10,10 +10,6 @@ from tensorflow.keras import layers
 import os
 
 
-
-
-
-
 num_skipped = 0
 for folder_name in ("Cat", "Dog"):
     folder_path = os.path.join("/home/burakzdd/Desktop/keras/PetImages", folder_name)
@@ -31,9 +27,6 @@ for folder_name in ("Cat", "Dog"):
             os.remove(fpath)
 
 print("Deleted %d images" % num_skipped)
-
-
-
 
 
 image_size = (180, 180)
@@ -57,9 +50,6 @@ val_ds = tf.keras.preprocessing.image_dataset_from_directory(
 )
 
 
-
-
-
 import matplotlib.pyplot as plt
 
 plt.figure(figsize=(10, 10))
@@ -72,17 +62,12 @@ for images, labels in train_ds.take(1):
 
 
 
-
-
 data_augmentation = keras.Sequential(
     [
         layers.experimental.preprocessing.RandomFlip("horizontal"),
         layers.experimental.preprocessing.RandomRotation(0.1),
     ]
 )
-
-
-
 
 
 plt.figure(figsize=(10, 10))
@@ -95,8 +80,6 @@ for images, _ in train_ds.take(1):
 
 
 
-
-
 input_shape = (50,50,1)
 inputs = keras.Input(shape=input_shape)
 x = data_augmentation(inputs)
@@ -104,13 +87,8 @@ x = layers.experimental.preprocessing.Rescaling(1./255)(x)
 ...  # Rest of the model
 
 
-
-
-
 train_ds = train_ds.prefetch(buffer_size=32)
 val_ds = val_ds.prefetch(buffer_size=32)
-
-
 
 
 
@@ -171,9 +149,6 @@ model = make_model(input_shape=image_size + (3,), num_classes=2)
 keras.utils.plot_model(model, show_shapes=True)
 
 
-
-
-
 epochs = 2
 
 callbacks = [
@@ -187,7 +162,6 @@ model.compile(
 model.fit(
     train_ds, epochs=epochs, callbacks=callbacks, validation_data=val_ds,
 )
-
 
 
 img = keras.preprocessing.image.load_img(
@@ -205,8 +179,6 @@ print(
 
 
 
-
-
 img = keras.preprocessing.image.load_img(
     "/home/burakzdd/Desktop/keras/PetImages/Dog/3142.jpg", target_size=image_size
 )
@@ -219,9 +191,3 @@ print(
     "Bu görsel %.2f oranında kedi ve %.2f oranında köpek."
     % (100 * (1 - score), 100 * score)
 )
-
-
-
-
-
-
